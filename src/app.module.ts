@@ -29,5 +29,4 @@ import { User } from './users/users.model';
   providers: [AppService],
   exports: [],
 })
-export class AppModule {
-}
+export class AppModule {}

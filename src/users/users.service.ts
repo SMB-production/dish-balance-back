@@ -7,24 +7,25 @@ import { DeleteUserDto } from './dto/delete-user-dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User) private userRepository: typeof User) {
-  }
+  constructor(@InjectModel(User) private userRepository: typeof User) {}
 
   async createUser(dto: CreateUserDto) {
     return await this.userRepository.create(dto);
   }
-
 
   async getAllUsers() {
     return await this.userRepository.findAll();
   }
 
   async updateUserPassword({ password, id }: UpdateUserPasswordDto) {
-    await this.userRepository.update({
-      password,
-    }, {
-      where: { id: id },
-    });
+    await this.userRepository.update(
+      {
+        password,
+      },
+      {
+        where: { id: id },
+      },
+    );
   }
 
   async deleteUser({ id }: DeleteUserDto) {

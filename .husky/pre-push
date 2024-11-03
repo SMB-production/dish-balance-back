@@ -1,0 +1,1 @@
+npx lint-staged && tsc --skipLibCheck && npm run build && npm run test
