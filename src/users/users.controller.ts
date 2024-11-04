@@ -11,29 +11,29 @@ import { User } from './users.model';
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  @ApiOperation({summary: 'Получение всех пользователей'})
-  @ApiResponse({status: 200, type: [User]})
+  @ApiOperation({ summary: 'Получение всех пользователей' })
+  @ApiResponse({ status: 200, type: [User] })
   @Get()
   getAll() {
     return this.userService.getAllUsers();
   }
 
-  @ApiOperation({summary: 'Создание пользователя'})
-  @ApiResponse({status: 200, type: User})
+  @ApiOperation({ summary: 'Создание пользователя' })
+  @ApiResponse({ status: 200, type: User })
   @Post()
   create(@Body() userDto: CreateUserDto) {
     return this.userService.createUser(userDto);
   }
 
-  @ApiOperation({summary: 'Обновление пароля пользователя'})
-  @ApiResponse({status: 204})
+  @ApiOperation({ summary: 'Обновление пароля пользователя' })
+  @ApiResponse({ status: 204 })
   @Patch()
   updateUser(@Body() userDto: UpdateUserPasswordDto) {
     return this.userService.updateUserPassword(userDto);
   }
 
-  @ApiOperation({summary: 'Удаление пользователя'})
-  @ApiResponse({status: 200, type: String})
+  @ApiOperation({ summary: 'Удаление пользователя' })
+  @ApiResponse({ status: 200, type: String })
   @Delete()
   deleteUser(@Body() userDto: DeleteUserDto) {
     return this.userService.deleteUser(userDto);

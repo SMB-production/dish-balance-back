@@ -8,15 +8,15 @@ interface UserCreationAttrs {
 
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttrs> {
-  @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
+  @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
 
-  @ApiProperty({example: 'user@example.com', description: 'Адрес электронной почты'})
+  @ApiProperty({ example: 'user@example.com', description: 'Адрес электронной почты' })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
 
-  @ApiProperty({example: 'qwerty', description: 'Пароль'})
+  @ApiProperty({ example: 'qwerty', description: 'Пароль' })
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
 }
