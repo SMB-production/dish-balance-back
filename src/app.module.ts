@@ -3,12 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersController } from './modules/users/users.controller';
-import { UsersModule } from './modules/users/users.module';
-import { User } from './modules/users/users.model';
 import { CPFCFormModel } from './modules/CPFC-form/cpfc-form.model';
 import { CPFCFormController } from './modules/CPFC-form/cpfc-form.controller';
 import { CPFCFormModule } from './modules/CPFC-form/cpfc-form.module';
+import { AuthController } from './modules/auth/auth.controller';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
+import { User } from './modules/user/user.model';
 
 @Module({
   imports: [
@@ -33,10 +34,11 @@ import { CPFCFormModule } from './modules/CPFC-form/cpfc-form.module';
       }),
     }),
 
-    UsersModule,
     CPFCFormModule,
+    AuthModule,
+    UserModule,
   ],
-  controllers: [AppController, UsersController, CPFCFormController],
+  controllers: [AppController, CPFCFormController, AuthController],
   providers: [AppService],
 })
 export class AppModule {}
