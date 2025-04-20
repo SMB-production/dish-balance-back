@@ -12,7 +12,7 @@ export class CPFCFormService {
     return await this.CPFCRepository.findAll({ where: { userId } });
   }
 
-  async calculateCPFCDishes(dto: CalculateDPFCDishes, userId: string) {
+  async calculateCPFCDishes(dto: CalculateDPFCDishes, userId?: string) {
     const totalWeight = dto.ingredients.reduce((acc, { weight }) => acc + weight, 0);
     const totalIngredientsValues: TotalCPFC[] = dto.ingredients.map(
       ({ carbohydratesPer100g, fatPer100g, proteinPer100g, caloriesPer100g, weight }) => ({
@@ -50,18 +50,18 @@ export class CPFCFormService {
       carbohydrates: this.roundToTwo(totalDishValues.carbohydrates / totalWeight),
       weight: totalWeight,
     };
-    try {
-      const result = {
-        name: dto.name,
-        ingredients: dto.ingredients,
-        cpfc: dishCPFC,
-        userId,
-      };
+    const result = {
+      name: dto.name,
+      ingredients: dto.ingredients,
+      cpfc: dishCPFC,
+      userId: userId ?? null,
+    };
+
+    if (userId) {
       await this.CPFCRepository.create(result);
-      return result;
-    } catch (error) {
-      return error;
     }
+
+    return result;
   }
 
   private roundToTwo(num: number): number {

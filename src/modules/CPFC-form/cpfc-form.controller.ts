@@ -22,14 +22,11 @@ export class CPFCFormController {
     return this.CPFCFormService.getCPFCDishesByUser(req.user.id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Рассчет КБЖУ блюда' })
   @ApiResponse({ status: 200, type: CPFCFormModel })
   @Post()
   calculateCPFCDishes(@Body() dishDTO: CalculateDPFCDishes, @Req() req: Request) {
-    if (!req?.user?.id) {
-      throw new Error('User not found');
-    }
-    return this.CPFCFormService.calculateCPFCDishes(dishDTO, req.user.id);
+    const userID = req?.user?.id;
+    return this.CPFCFormService.calculateCPFCDishes(dishDTO, userID);
   }
 }

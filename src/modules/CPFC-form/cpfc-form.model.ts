@@ -65,7 +65,7 @@ export class CPFCFormModel extends Model<CPFCFormModel, CPFCForm> {
       },
     },
   })
-  @Column({ type: DataType.JSON, allowNull: false })
+  @Column({ type: DataType.JSON, allowNull: true })
   ingredients: Ingredients[];
 
   @ForeignKey(() => User)
