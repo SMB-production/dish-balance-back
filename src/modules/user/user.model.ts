@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, Unique } from 'sequelize-typescript';
+import { Column, DataType, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 interface UserCreationAttrs {
   email: string;
@@ -8,9 +8,8 @@ interface UserCreationAttrs {
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttrs> {
   @PrimaryKey
-  @AutoIncrement
-  @Column
-  id: number;
+  @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true, allowNull: false })
+  id: string;
 
   @Unique
   @Column(DataType.STRING)

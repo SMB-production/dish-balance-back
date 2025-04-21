@@ -1,4 +1,4 @@
-import { Injectable, Post } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CPFCFormModel } from './cpfc-form.model';
 import { CalculateDPFCDishes } from './dto/calculate-DPFC-dishes';
@@ -8,8 +8,11 @@ import { TotalCPFC } from './dto/ingredients';
 export class CPFCFormService {
   constructor(@InjectModel(CPFCFormModel) private CPFCRepository: typeof CPFCFormModel) {}
 
-  @Post()
-  async calculateCPFCDishes(dto: CalculateDPFCDishes) {
+  async getCPFCDishesByUser(userId: string) {
+    return await this.CPFCRepository.findAll({ where: { userId } });
+  }
+
+  async calculateCPFCDishes(dto: CalculateDPFCDishes, userId?: string) {
     const totalWeight = dto.ingredients.reduce((acc, { weight }) => acc + weight, 0);
     const totalIngredientsValues: TotalCPFC[] = dto.ingredients.map(
       ({ carbohydratesPer100g, fatPer100g, proteinPer100g, caloriesPer100g, weight }) => ({
@@ -47,17 +50,18 @@ export class CPFCFormService {
       carbohydrates: this.roundToTwo(totalDishValues.carbohydrates / totalWeight),
       weight: totalWeight,
     };
-    try {
-      const result = {
-        name: dto.name,
-        ingredients: dto.ingredients,
-        cpfc: dishCPFC,
-      };
+    const result = {
+      name: dto.name,
+      ingredients: dto.ingredients,
+      cpfc: dishCPFC,
+      userId: userId ?? null,
+    };
+
+    if (userId) {
       await this.CPFCRepository.create(result);
-      return result;
-    } catch (error) {
-      return error;
     }
+
+    return result;
   }
 
   private roundToTwo(num: number): number {
