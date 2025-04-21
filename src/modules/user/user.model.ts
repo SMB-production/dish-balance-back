@@ -17,4 +17,13 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @Column(DataType.STRING)
   password: string;
+
+  @Column(DataType.STRING)
+  name: string;
+
+  @Column(DataType.STRING)
+  surname: string;
+
+  @Column(DataType.INTEGER)
+  age: number;
 }
