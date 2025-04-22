@@ -11,6 +11,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { User } from './modules/user/user.model';
 import { AuthMiddleware } from './modules/auth/auth.middleware';
+import { IngredientModule } from './modules/ingredient/ingredient.module';
+import { IngredientController } from './modules/ingredient/ingredient.controller';
 
 @Module({
   imports: [
@@ -38,8 +40,9 @@ import { AuthMiddleware } from './modules/auth/auth.middleware';
     CPFCFormModule,
     AuthModule,
     UserModule,
+    IngredientModule,
   ],
-  controllers: [AppController, CPFCFormController, AuthController],
+  controllers: [AppController, CPFCFormController, AuthController, IngredientController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {

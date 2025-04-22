@@ -6,12 +6,12 @@ import { CalculateDPFCDishes } from './dto/calculate-DPFC-dishes';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 
-@ApiTags('Главная форма рассчета КБЖУ')
+@ApiTags('Главная форма расчета КБЖУ')
 @Controller('cpfc')
 export class CPFCFormController {
   constructor(private CPFCFormService: CPFCFormService) {}
 
-  @ApiOperation({ summary: 'Получение всех рассчетов по пользователю' })
+  @ApiOperation({ summary: 'Получение всех расчетов по пользователю' })
   @ApiResponse({ status: 200, type: [CPFCFormModel] })
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -22,7 +22,7 @@ export class CPFCFormController {
     return this.CPFCFormService.getCPFCDishesByUser(req.user.id);
   }
 
-  @ApiOperation({ summary: 'Рассчет КБЖУ блюда' })
+  @ApiOperation({ summary: 'Расчет КБЖУ блюда' })
   @ApiResponse({ status: 200, type: CPFCFormModel })
   @Post()
   calculateCPFCDishes(@Body() dishDTO: CalculateDPFCDishes, @Req() req: Request) {
