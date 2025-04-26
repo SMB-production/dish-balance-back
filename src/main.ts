@@ -11,6 +11,12 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Dish Balance')
     .setDescription('Документация REST API')
