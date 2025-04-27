@@ -7,6 +7,7 @@ interface CPFCForm {
   name: string;
   cpfc: TotalCPFC;
   ingredients: Ingredients[];
+  userId: string | null;
 }
 
 @Table({ tableName: 'dishСPFC' })
