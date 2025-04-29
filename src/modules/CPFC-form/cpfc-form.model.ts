@@ -1,12 +1,12 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Ingredients, TotalCPFC } from './dto/ingredients';
+import { IIngredient, TotalCPFC } from './dto/ingredients';
 import { User } from '../user/user.model';
 
 interface CPFCForm {
   name: string;
   cpfc: TotalCPFC;
-  ingredients: Ingredients[];
+  ingredients: IIngredient[];
   userId: string | null;
 }
 
@@ -67,7 +67,7 @@ export class CPFCFormModel extends Model<CPFCFormModel, CPFCForm> {
     },
   })
   @Column({ type: DataType.JSON, allowNull: true })
-  ingredients: Ingredients[];
+  ingredients: IIngredient[];
 
   @ForeignKey(() => User)
   @Column({ type: DataType.UUID })
