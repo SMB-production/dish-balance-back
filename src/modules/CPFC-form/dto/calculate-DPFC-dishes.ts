@@ -1,9 +1,16 @@
-import { Ingredients } from './ingredients';
+import { Ingredient } from './ingredients';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CalculateDPFCDishes {
+  @IsString()
   @ApiProperty({ example: 'Салат', description: 'Название блюда' })
   readonly name: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Ingredient)
   @ApiProperty({
     example: [
       {
@@ -29,5 +36,5 @@ export class CalculateDPFCDishes {
       },
     },
   })
-  readonly ingredients: Ingredients[];
+  readonly ingredients: Ingredient[];
 }
