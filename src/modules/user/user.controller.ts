@@ -1,18 +1,18 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EditUserDto } from './dto/edit-user.dto';
+import { PatchUserDto } from './dto/patch-user.dto';
 import { Body, Controller, InternalServerErrorException, Patch, Put, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { UserPayload } from '../auth/interfaces/user-payload.interface';
 import { UserService } from './user.service';
-import { PatchUserDto } from './dto/patch-user.dto';
 
 @ApiTags('Контроллер для работы с пользователем')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @ApiOperation({ summary: 'Редактирование пользователя' })
+  @ApiOperation({ summary: 'Редактирование пользователя (PUT)' })
   @ApiResponse({ status: 200, type: EditUserDto })
   @UseGuards(JwtAuthGuard)
   @Put('edit-user')
@@ -26,7 +26,7 @@ export class UserController {
     }
   }
 
-  @ApiOperation({ summary: 'Изменение возраста и веса пользователя' })
+  @ApiOperation({ summary: 'Частичное редактирование возраста/веса/роста/пола (PATCH)' })
   @ApiResponse({ status: 200, type: PatchUserDto })
   @UseGuards(JwtAuthGuard)
   @Patch('edit-user')

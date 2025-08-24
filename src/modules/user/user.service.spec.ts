@@ -1,11 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
-import { User } from './user.model';
 import { UserService } from './user.service';
+import { User } from './user.model';
 
 describe('UserService', () => {
   let service: UserService;
   let userRepository: typeof User;
+
+  const mockUser = {
+    id: '123',
+    email: 'test@mail.com',
+    name: 'Danil',
+    surname: 'Ivanov',
+    age: 25,
+    weight: 70,
+    height: 175,
+    sex: 'male',
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -14,8 +25,10 @@ describe('UserService', () => {
         {
           provide: getModelToken(User),
           useValue: {
-            update: jest.fn(),
+            create: jest.fn(),
             findByPk: jest.fn(),
+            findOne: jest.fn(),
+            update: jest.fn(),
           },
         },
       ],
@@ -25,15 +38,25 @@ describe('UserService', () => {
     userRepository = module.get(getModelToken(User));
   });
 
-  it('should patch user age and weight', async () => {
-    const mockUser = { id: '123', age: 30, weight: 80 };
-
+  it('should patch user data', async () => {
     (userRepository.update as jest.Mock).mockResolvedValue([1]);
     (userRepository.findByPk as jest.Mock).mockResolvedValue(mockUser);
 
-    const result = await service.patchUser('123', { age: 30, weight: 80 });
+    const result = await service.patchUser('123', { age: 26, weight: 72 });
 
-    expect(userRepository.update).toHaveBeenCalledWith({ age: 30, weight: 80 }, { where: { id: '123' } });
+    expect(userRepository.update).toHaveBeenCalledWith({ age: 26, weight: 72 }, { where: { id: '123' } });
     expect(result).toEqual(mockUser);
+  });
+
+  it('should edit user data', async () => {
+    (userRepository.update as jest.Mock).mockResolvedValue([1]);
+
+    const dto = { ...mockUser, age: 27 };
+    await service.editUser(dto as any);
+
+    expect(userRepository.update).toHaveBeenCalledWith(
+      expect.objectContaining({ age: 27, id: '123', email: 'test@mail.com' }),
+      { where: { id: '123' } },
+    );
   });
 });

@@ -1,16 +1,27 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsNumber, IsOptional, Min } from 'class-validator';
+import { IsEnum, IsInt, IsNumber, IsOptional, Min } from 'class-validator';
 
 export class PatchUserDto {
-  @ApiPropertyOptional({ example: 25, description: 'Возраст пользователя' })
+  @ApiPropertyOptional({ example: 25 })
   @IsOptional()
   @IsInt()
-  @Min(0)
+  @Min(1)
   age?: number;
 
-  @ApiPropertyOptional({ example: 70.5, description: 'Вес пользователя (кг)' })
+  @ApiPropertyOptional({ example: 70.5 })
   @IsOptional()
   @IsNumber()
-  @Min(0)
+  @Min(1)
   weight?: number;
+
+  @ApiPropertyOptional({ example: 175 })
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  height?: number;
+
+  @ApiPropertyOptional({ example: 'male', enum: ['male', 'female'] })
+  @IsOptional()
+  @IsEnum(['male', 'female'])
+  sex?: 'male' | 'female';
 }
