@@ -31,4 +31,9 @@ export class UserService {
       },
     );
   }
+
+  async patchUser(id: string, patchData: Partial<User>) {
+    await this.userRepository.update(patchData, { where: { id } });
+    return this.userRepository.findByPk(id);
+  }
 }

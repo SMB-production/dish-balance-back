@@ -3,5 +3,6 @@ export interface EditUserInterface {
   email: string;
   name: string;
   surname: string;
-  age: number;
+  age?: number;
+  weight?: number;
 }
