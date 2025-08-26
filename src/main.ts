@@ -13,6 +13,7 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true,
       },
+      forbidNonWhitelisted: true,
     }),
   );
 
@@ -27,7 +28,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Dish Balance')
     .setDescription('Документация REST API')
-    .setVersion('1.0.0')
+    .setVersion('1.1.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

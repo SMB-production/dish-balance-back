@@ -24,6 +24,18 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column(DataType.STRING)
   surname: string;
 
-  @Column(DataType.INTEGER)
+  @Column({ type: DataType.INTEGER, allowNull: true })
   age: number;
+
+  @Column({ type: DataType.FLOAT, allowNull: true })
+  weight: number;
+
+  @Column({ type: DataType.FLOAT, allowNull: true })
+  height: number;
+
+  @Column({
+    type: DataType.ENUM('male', 'female'),
+    allowNull: true,
+  })
+  sex: 'male' | 'female';
 }

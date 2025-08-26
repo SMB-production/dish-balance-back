@@ -1,15 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsInt, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEnum, IsInt, IsNumber, IsOptional, Min } from 'class-validator';
 
-export class EditUserDto {
-  @ApiProperty()
-  @IsString()
-  name: string;
-
-  @ApiProperty()
-  @IsString()
-  surname: string;
-
+export class PatchUserDto {
   @ApiPropertyOptional({ example: 25 })
   @IsOptional()
   @IsInt()
