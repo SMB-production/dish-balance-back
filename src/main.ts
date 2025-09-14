@@ -3,8 +3,27 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
+
+async function runMigrations() {
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      console.log('Запуск миграций базы данных...');
+      await execAsync('npx sequelize-cli db:migrate --env production');
+      console.log('Миграции выполнены успешно!');
+    } catch (error) {
+      console.error('Ошибка при выполнении миграций:', error.message);
+      console.log('Продолжаем запуск приложения...');
+    }
+  }
+}
 
 async function bootstrap() {
+  await runMigrations();
+
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
