@@ -51,7 +51,18 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('api/docs', app, document, {
+    jsonDocumentUrl: 'swagger/json',
+    yamlDocumentUrl: 'swagger/yaml',
+    swaggerUrl: '/swagger/json',
+    explorer: true,
+    swaggerOptions: {
+      urls: [
+        { url: '/swagger/json', name: 'OpenAPI JSON' },
+        { url: '/swagger/yaml', name: 'OpenAPI YAML' },
+      ],
+    },
+  });
 
   await app.listen(process.env.PORT ?? 5000);
 }
