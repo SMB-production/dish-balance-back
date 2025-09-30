@@ -1,4 +1,4 @@
-import { Column, DataType, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Column, DataType, Model, PrimaryKey, Table, Unique, CreatedAt, UpdatedAt } from 'sequelize-typescript';
 
 interface UserCreationAttrs {
   email: string;
@@ -25,17 +25,25 @@ export class User extends Model<User, UserCreationAttrs> {
   surname: string;
 
   @Column({ type: DataType.INTEGER, allowNull: true })
-  age: number;
+  age: number | null;
 
   @Column({ type: DataType.FLOAT, allowNull: true })
-  weight: number;
+  weight: number | null;
 
   @Column({ type: DataType.FLOAT, allowNull: true })
-  height: number;
+  height: number | null;
 
   @Column({
     type: DataType.ENUM('male', 'female'),
     allowNull: true,
   })
-  sex: 'male' | 'female';
+  sex: 'male' | 'female' | null;
+
+  @CreatedAt
+  @Column({ type: DataType.DATE })
+  createdAt: Date;
+
+  @UpdatedAt
+  @Column({ type: DataType.DATE })
+  updatedAt: Date;
 }

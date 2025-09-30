@@ -75,31 +75,34 @@ export class HybridBMIDto {
     example: 70,
     description: 'Вес в кг (опционально, если есть в JWT токене)',
     required: false,
+    nullable: true,
   })
   @IsOptional()
   @IsNumber()
   @Min(20)
   @Max(300)
-  weight?: number;
+  weight?: number | null;
 
   @ApiProperty({
     example: 175,
     description: 'Рост в см (опционально, если есть в JWT токене)',
     required: false,
+    nullable: true,
   })
   @IsOptional()
   @IsNumber()
   @Min(100)
   @Max(250)
-  height?: number;
+  height?: number | null;
 
   @ApiProperty({
     example: 'male',
     description: 'Пол (опционально, если есть в JWT токене)',
     enum: ['male', 'female'],
     required: false,
+    nullable: true,
   })
   @IsOptional()
   @IsEnum(['male', 'female'])
-  sex?: 'male' | 'female';
+  sex?: 'male' | 'female' | null;
 }
