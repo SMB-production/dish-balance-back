@@ -5,7 +5,7 @@ import { JwtAuthGuard } from './jwt.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { UserPayload } from './interfaces/user-payload.interface';
+import { User } from '../user/user.model';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto } from '../user/dto/user.dto';
 import { AuthStatusDto } from './dto/auth-status.dto';
@@ -54,11 +54,8 @@ export class AuthController {
   @ApiResponse({ status: 200, type: UserDto })
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@CurrentUser() user: UserPayload) {
-    return {
-      id: user.id,
-      email: user.email,
-    };
+  getProfile(@CurrentUser() user: User): UserDto {
+    return UserDto.fromEntity(user);
   }
 
   @ApiOperation({ summary: 'Проверка статуса авторизации пользователя' })
